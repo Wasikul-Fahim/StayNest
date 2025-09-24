@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staynest - Login</title>
+</head>
+<body style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center;">
+    <div style="width: 100%; max-width: 400px; padding: 20px;">
+        <!-- Logo Header -->
+        <div style="text-align: center; margin-bottom: 40px;">
+            <h1 style="color: white; margin: 0; font-size: 32px; font-weight: bold;">🏠 Staynest</h1>
+            <p style="color: rgba(255,255,255,0.8); margin: 5px 0 0 0; font-size: 16px;">Welcome Back!</p>
+        </div>
+
+        <!-- Login Card -->
+        <div style="background: white; padding: 40px; border-radius: 15px; box-shadow: 0 15px 35px rgba(0,0,0,0.1);">
+            <!-- Error Messages -->
+            {% if messages %}
+                {% for message in messages %}
+                    <div style="background: #f8d7da; color: #721c24; padding: 12px 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #f5c6cb; font-size: 14px;">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <!-- Login Form -->
+            <form method="post" action="{% url 'login' %}" style="margin-bottom: 20px;">
+                {% csrf_token %}
+
+                <!-- Email Field -->
+                <div style="margin-bottom: 25px;">
+                    <label style="display: block; margin-bottom: 8px; color: #2c3e50; font-weight: 600; font-size: 14px;">📧 Email Address</label>
+                    <input type="email" name="email" required
+                           style="width: 100%; padding: 14px 16px; border: 2px solid #e9ecef; border-radius: 10px; font-size: 16px; box-sizing: border-box; transition: all 0.3s ease; outline: none;"
+                           placeholder="Enter your email address">
+                    <div style="height: 2px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 0 0 10px 10px; margin-top: -2px; transform: scaleX(0); transition: transform 0.3s ease;"></div>
+                </div>
+
+                <!-- Password Field -->
+                <div style="margin-bottom: 25px;">
+                    <label style="display: block; margin-bottom: 8px; color: #2c3e50; font-weight: 600; font-size: 14px;">🔐 Password</label>
+                    <input type="password" name="password" required
+                           style="width: 100%; padding: 14px 16px; border: 2px solid #e9ecef; border-radius: 10px; font-size: 16px; box-sizing: border-box; transition: all 0.3s ease; outline: none;"
+                           placeholder="Enter your password">
+                    <div style="height: 2px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 0 0 10px 10px; margin-top: -2px; transform: scaleX(0); transition: transform 0.3s ease;"></div>
+                </div>
+
+                <!-- Forgot Password -->
+                <div style="margin-bottom: 30px; text-align: right;">
+                    <a href="#" style="color: #667eea; text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.3s ease;">Forgot Password?</a>
+                </div>
+
+                <!-- Login Button -->
+                <button type="submit" style="width: 100%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 16px; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);">
+                    🔐 Sign In to Your Account
+                </button>
+            </form>
+
+            <!-- Divider -->
+            <div style="text-align: center; margin: 30px 0; position: relative;">
+                <span style="background: white; padding: 0 15px; color: #6c757d; font-size: 14px;">OR</span>
+                <div style="position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: #e9ecef;"></div>
+            </div>
+
+            <!-- Social Login Buttons -->
+            <div style="margin-bottom: 30px;">
+                <button style="width: 100%; background: #4285f4; color: white; padding: 12px; border: none; border-radius: 10px; font-size: 14px; font-weight: 500; cursor: pointer; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.3s ease;">
+                    <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google" style="width: 18px; height: 18px;"> Continue with Google
+                </button>
+                <button style="width: 100%; background: #1877f2; color: white; padding: 12px; border: none; border-radius: 10px; font-size: 14px; font-weight: 500; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.3s ease;">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook" style="width: 18px; height: 18px; filter: brightness(0) invert(1);"> Continue with Facebook
+                </button>
+            </div>
+
+            <!-- Sign Up Link -->
+            <div style="text-align: center; padding-top: 20px; border-top: 1px solid #e9ecef;">
+                <p style="margin: 0 0 15px 0; color: #6c757d;">Don't have an account?</p>
+                <a href="{% url 'signup' %}" style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%); color: white; padding: 14px 30px; text-decoration: none; border-radius: 25px; font-weight: bold; font-size: 16px; display: inline-block; box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4); transition: all 0.3s ease;">
+                    📝 Create Account
+                </a>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div style="text-align: center; margin-top: 40px; color: rgba(255,255,255,0.7); font-size: 12px;">
+            <p style="margin: 0;">© 2025 Staynest. All rights reserved.</p>
+            <p style="margin: 5px 0 0 0;"><a href="#" style="color: rgba(255,255,255,0.7); text-decoration: none;">Privacy Policy</a> • <a href="#" style="color: rgba(255,255,255,0.7); text-decoration: none;">Terms of Service</a></p>
+        </div>
+    </div>
+
+    <script>
+        // Simple form validation feedback
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentNode.querySelector('div:last-child').style.transform = 'scaleX(1)';
+                this.style.borderColor = '#667eea';
+            });
+
+            input.addEventListener('blur', function() {
+                if (this.value === '') {
+                    this.parentNode.querySelector('div:last-child').style.transform = 'scaleX(0)';
+                    this.style.borderColor = '#e9ecef';
+                }
+            });
+        });
+
+        // Form submission validation
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const email = document.querySelector('input[type="email"]').value;
+            const password = document.querySelector('input[type="password"]').value;
+
+            if (!email || !password) {
+                e.preventDefault();
+                alert('Please fill in all fields!');
+                return false;
+            }
+
+            // Basic email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                e.preventDefault();
+                alert('Please enter a valid email address!');
+                return false;
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staynest - Create Account</title>
+</head>
+<body style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center;">
+    <div style="width: 100%; max-width: 450px; padding: 20px;">
+        <!-- Logo Header -->
+        <div style="text-align: center; margin-bottom: 40px;">
+            <h1 style="color: white; margin: 0; font-size: 32px; font-weight: bold;">🏠 Staynest</h1>
+            <p style="color: rgba(255,255,255,0.8); margin: 5px 0 0 0; font-size: 16px;">Create Your Account</p>
+            <p style="color: rgba(255,255,255,0.6); margin: 5px 0 0 0; font-size: 14px;">Start your journey with Staynest</p>
+        </div>
+
+        <!-- Signup Card -->
+        <div style="background: white; padding: 40px; border-radius: 15px; box-shadow: 0 15px 35px rgba(0,0,0,0.1);">
+            <!-- Error/Success Messages -->
+            {% if messages %}
+                {% for message in messages %}
+                    <div style="background: {% if message.tags == 'success' %}#d4edda{% else %}#f8d7da{% endif %};
+                                color: {% if message.tags == 'success' %}#155724{% else %}#721c24{% endif %};
+                                padding: 12px 15px; border-radius: 8px; margin-bottom: 20px;
+                                border: 1px solid {% if message.tags == 'success' %}#c3e6cb{% else %}#f5c6cb{% endif %};
+                                font-size: 14px;">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <!-- Signup Form -->
+            <form method="post" action="{% url 'signup' %}" id="signupForm" style="margin-bottom: 25px;">
+                {% csrf_token %}
+
+                <!-- Full Name Field -->
+                <div style="margin-bottom: 25px;">
+                    <label style="display: block; margin-bottom: 8px; color: #2c3e50; font-weight: 600; font-size: 14px;">👤 Full Name</label>
+                    <input type="text" name="full_name" required maxlength="100"
+                           style="width: 100%; padding: 14px 16px; border: 2px solid #e9ecef; border-radius: 10px; font-size: 16px; box-sizing: border-box; transition: all 0.3s ease; outline: none;"
+                           placeholder="Enter your full name">
+                    <div style="height: 2px; background: linear-gradient(135deg, #28a745 0%, #20c997 100%); border-radius: 0 0 10px 10px; margin-top: -2px; transform: scaleX(0); transition: transform 0.3s ease;" class="underline"></div>
+                    <small style="color: #6c757d; font-size: 12px; margin-top: 5px; display: block;">How you want to appear to guests</small>
+                </div>
+
+                <!-- Email Field -->
+                <div style="margin-bottom: 25px;">
+                    <label style="display: block; margin-bottom: 8px; color: #2c3e50; font-weight: 600; font-size: 14px;">📧 Email Address</label>
+                    <input type="email" name="email" required
+                           pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                           style="width: 100%; padding: 14px 16px; border: 2px solid #e9ecef; border-radius: 10px; font-size: 16px; box-sizing: border-box; transition: all 0.3s ease; outline: none;"
+                           placeholder="Enter your email address">
+                    <div style="height: 2px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 0 0 10px 10px; margin-top: -2px; transform: scaleX(0); transition: transform 0.3s ease;" class="underline"></div>
+                    <small style="color: #6c757d; font-size: 12px; margin-top: 5px; display: block;">We'll never share your email with anyone else</small>
+                </div>
+
+                <!-- Password Field -->
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 8px; color: #2c3e50; font-weight: 600; font-size: 14px;">🔐 Password</label>
+                    <input type="password" name="password" id="password" required
+                           pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}"
+                           style="width: 100%; padding: 14px 16px; border: 2px solid #e9ecef; border-radius: 10px; font-size: 16px; box-sizing: border-box; transition: all 0.3s ease; outline: none;"
+                           placeholder="Create a password">
+                    <div style="height: 2px; background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%); border-radius: 0 0 10px 10px; margin-top: -2px; transform: scaleX(0); transition: transform 0.3s ease;" class="underline"></div>
+                </div>
+
+                <!-- Password Requirements -->
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 25px; border-left: 4px solid #dee2e6;">
+                    <p style="margin: 0 0 10px 0; color: #495057; font-size: 14px; font-weight: 500;">Password must contain:</p>
+                    <ul style="margin: 0; padding-left: 20px; color: #6c757d; font-size: 13px; line-height: 1.5;">
+                        <li id="length">• At least 8 characters long</li>
+                        <li id="uppercase">• 1 uppercase letter (A-Z)</li>
+                        <li id="lowercase">• 1 lowercase letter (a-z)</li>
+                        <li id="number">• 1 number (0-9)</li>
+                        <li id="special">• 1 special character (!@#$%^&*)</li>
+                    </ul>
+                </div>
+
+                <!-- Confirm Password Field -->
+                <div style="margin-bottom: 30px;">
+                    <label style="display: block; margin-bottom: 8px; color: #2c3e50; font-weight: 600; font-size: 14px;">🔐 Confirm Password</label>
+                    <input type="password" name="confirm_password" id="confirm_password" required
+                           style="width: 100%; padding: 14px 16px; border: 2px solid #e9ecef; border-radius: 10px; font-size: 16px; box-sizing: border-box; transition: all 0.3s ease; outline: none;"
+                           placeholder="Confirm your password">
+                    <div style="height: 2px; background: linear-gradient(135deg, #28a745 0%, #20c997 100%); border-radius: 0 0 10px 10px; margin-top: -2px; transform: scaleX(0); transition: transform 0.3s ease;" class="underline"></div>
+                    <div id="passwordMatch" style="color: #dc3545; font-size: 12px; margin-top: 5px; display: none;">Passwords do not match!</div>
+                </div>
+
+                <!-- Terms Checkbox -->
+                <div style="margin-bottom: 25px; display: flex; align-items: center; gap: 10px;">
+                    <input type="checkbox" id="terms" required style="width: 18px; height: 18px; accent-color: #667eea;">
+                    <label for="terms" style="margin: 0; color: #495057; font-size: 14px; cursor: pointer; display: flex; align-items: center; gap: 5px;">
+                        <span style="display: inline-block; width: 18px; height: 18px; border: 2px solid #dee2e6; border-radius: 3px; background: white;"></span>
+                        I agree to the <a href="#" style="color: #667eea; text-decoration: none;">Terms of Service</a> and <a href="#" style="color: #667eea; text-decoration: none;">Privacy Policy</a>
+                    </label>
+                </div>
+
+                <!-- Create Account Button -->
+                <button type="submit" id="createBtn" disabled
+                        style="width: 100%; background: linear-gradient(135deg, #28a745 0%, #20c997 100%); color: white; padding: 16px; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: not-allowed; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4); opacity: 0.6;">
+                    📝 Create Account
+                </button>
+            </form>
+
+            <!-- Social Signup -->
+            <div style="text-align: center; margin: 30px 0; position: relative;">
+                <span style="background: white; padding: 0 20px; color: #6c757d; font-size: 14px; font-weight: 500;">OR</span>
+                <div style="position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: #e9ecef;"></div>
+            </div>
+
+            <div style="margin-bottom: 30px;">
+                <button style="width: 100%; background: #4285f4; color: white; padding: 14px; border: none; border-radius: 10px; font-size: 15px; font-weight: 500; cursor: pointer; margin-bottom: 12px; display: flex; align-items: center; justify-content: center; gap: 12px; transition: all 0.3s ease; box-shadow: 0 2px 8px rgba(66, 133, 244, 0.3);">
+                    <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google" style="width: 20px; height: 20px;"> Sign up with Google
+                </button>
+                <button style="width: 100%; background: #1877f2; color: white; padding: 14px; border: none; border-radius: 10px; font-size: 15px; font-weight: 500; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 12px; transition: all 0.3s ease; box-shadow: 0 2px 8px rgba(24, 119, 242, 0.3);">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook" style="width: 20px; height: 20px; filter: brightness(0) invert(1);"> Sign up with Facebook
+                </button>
+            </div>
+
+            <!-- Login Link -->
+            <div style="text-align: center; padding-top: 20px; border-top: 1px solid #e9ecef;">
+                <p style="margin: 0 0 15px 0; color: #6c757d;">Already have an account?</p>
+                <a href="{% url 'login' %}" style="background: linear-gradient(135deg, #6c757d 0%, #495057 100%); color: white; padding: 14px 30px; text-decoration: none; border-radius: 25px; font-weight: bold; font-size: 16px; display: inline-block; box-shadow: 0 4px 15px rgba(108, 117, 125, 0.4); transition: all 0.3s ease;">
+                    🔐 Sign In
+                </a>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div style="text-align: center; margin-top: 40px; color: rgba(255,255,255,0.7); font-size: 12px;">
+            <p style="margin: 0;">© 2025 Staynest. All rights reserved.</p>
+            <p style="margin: 5px 0 0 0;"><a href="#" style="color: rgba(255,255,255,0.7); text-decoration: none;">Privacy Policy</a> • <a href="#" style="color: rgba(255,255,255,0.7); text-decoration: none;">Terms of Service</a></p>
+        </div>
+    </div>
+
+    <script>
+        // Password validation and real-time feedback
+        const password = document.getElementById('password');
+        const confirmPassword = document.getElementById('confirm_password');
+        const createBtn = document.getElementById('createBtn');
+        const form = document.getElementById('signupForm');
+        const requirements = {
+            length: document.getElementById('length'),
+            uppercase: document.getElementById('uppercase'),
+            lowercase: document.getElementById('lowercase'),
+            number: document.getElementById('number'),
+            special: document.getElementById('special')
+        };
+        const passwordMatch = document.getElementById('passwordMatch');
+
+        let passwordValid = false;
+        let passwordsMatch = false;
+        let termsChecked = false;
+
+        // Password pattern checks
+        function checkPasswordRequirements(pwd) {
+            const patterns = {
+                length: pwd.length >= 8,
+                uppercase: /[A-Z]/.test(pwd),
+                lowercase: /[a-z]/.test(pwd),
+                number: /\d/.test(pwd),
+                special: /[!@#$%^&*]/.test(pwd)
+            };
+
+            // Update visual feedback
+            Object.keys(patterns).forEach(key => {
+                if (patterns[key]) {
+                    requirements[key].style.color = '#28a745';
+                    requirements[key].innerHTML = '✓ ' + requirements[key].innerHTML.split('• ')[1];
+                } else {
+                    requirements[key].style.color = '#dc3545';
+                    requirements[key].innerHTML = '✗ ' + requirements[key].innerHTML.split('• ')[1];
+                }
+            });
+
+            passwordValid = Object.values(patterns).every(Boolean);
+            updateButtonState();
+        }
+
+        // Check password confirmation
+        function checkPasswordMatch() {
+            if (confirmPassword.value === password.value && confirmPassword.value !== '') {
+                passwordMatch.style.display = 'none';
+                passwordsMatch = true;
+            } else if (confirmPassword.value !== '') {
+                passwordMatch.style.display = 'block';
+                passwordsMatch = false;
+            } else {
+                passwordMatch.style.display = 'none';
+                passwordsMatch = false;
+            }
+            updateButtonState();
+        }
+
+        // Update button state
+        function updateButtonState() {
+            const fullName = document.querySelector('input[name="full_name"]').value.trim();
+            const email = document.querySelector('input[name="email"]').value.trim();
+            termsChecked = document.getElementById('terms').checked;
+
+            const allValid = fullName && email && passwordValid && passwordsMatch && termsChecked;
+
+            if (allValid) {
+                createBtn.disabled = false;
+                createBtn.style.opacity = '1';
+                createBtn.style.cursor = 'pointer';
+                createBtn.style.background = 'linear-gradient(135deg, #28a745 0%, #20c997 100%)';
+            } else {
+                createBtn.disabled = true;
+                createBtn.style.opacity = '0.6';
+                createBtn.style.cursor = 'not-allowed';
+                createBtn.style.background = 'linear-gradient(135deg, #6c757d 0%, #495057 100%)';
+            }
+        }
+
+        // Event listeners
+        password.addEventListener('input', function() {
+            checkPasswordRequirements(this.value);
+            checkPasswordMatch();
+        });
+
+        confirmPassword.addEventListener('input', checkPasswordMatch);
+
+        document.querySelector('input[name="full_name"]').addEventListener('input', updateButtonState);
+        document.querySelector('input[name="email"]').addEventListener('input', updateButtonState);
+
+        document.getElementById('terms').addEventListener('change', function() {
+            termsChecked = this.checked;
+            updateButtonState();
+        });
+
+        // Form submission validation
+        form.addEventListener('submit', function(e) {
+            const fullName = document.querySelector('input[name="full_name"]').value.trim();
+            const email = document.querySelector('input[name="email"]').value.trim();
+            const pwd = password.value;
+            const confirmPwd = confirmPassword.value;
+
+            // Final validation
+            if (!fullName) {
+                e.preventDefault();
+                alert('Please enter your full name!');
+                return false;
+            }
+
+            if (!email) {
+                e.preventDefault();
+                alert('Please enter your email address!');
+                return false;
+            }
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                e.preventDefault();
+                alert('Please enter a valid email address!');
+                return false;
+            }
+
+            if (!passwordValid) {
+                e.preventDefault();
+                alert('Please create a password that meets all requirements!');
+                password.focus();
+                return false;
+            }
+
+            if (pwd !== confirmPwd) {
+                e.preventDefault();
+                alert('Passwords do not match! Please try again.');
+                confirmPassword.focus();
+                return false;
+            }
+
+            if (!termsChecked) {
+                e.preventDefault();
+                alert('You must agree to the Terms of Service and Privacy Policy!');
+                document.getElementById('terms').focus();
+                return false;
+            }
+
+            // Show loading state
+            createBtn.innerHTML = '⏳ Creating Account...';
+            createBtn.disabled = true;
+        });
+
+        // Input focus effects
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentNode.querySelector('.underline').style.transform = 'scaleX(1)';
+                this.style.borderColor = '#667eea';
+                this.style.boxShadow = '0 0 0 3px rgba(102, 126, 234, 0.1)';
+            });
+
+            input.addEventListener('blur', function() {
+                if (this.value === '') {
+                    this.parentNode.querySelector('.underline').style.transform = 'scaleX(0)';
+                    this.style.borderColor = '#e9ecef';
+                    this.style.boxShadow = 'none';
+                } else {
+                    this.style.borderColor = '#28a745';
+                }
+            });
+        });
+
+        // Initialize button state
+        updateButtonState();
+    </script>
+</body>
+</html>

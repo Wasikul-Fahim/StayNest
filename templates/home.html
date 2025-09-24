@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staynest - Find Your Perfect Stay</title>
+</head>
+<body style="font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f8f9fa;">
+    <!-- Header Section -->
+    <header style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px 40px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+        <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;">
+            <!-- Logo -->
+            <div style="display: flex; align-items: center;">
+                <h1 style="margin: 0; font-size: 28px; font-weight: bold;">🏠 Staynest</h1>
+            </div>
+
+            <!-- Authentication Links -->
+            {% if user.is_authenticated %}
+                <div style="display: flex; align-items: center; gap: 20px;">
+                    <span style="color: white; font-weight: 500;">Welcome, {{ user.first_name|default:user.username|slice:":15" }}!</span>
+                    <a href="{% url 'dashboard' %}" style="color: white; text-decoration: none; background: rgba(255,255,255,0.2); padding: 8px 16px; border-radius: 20px; font-weight: 500; transition: all 0.3s ease;">
+                        📊 Dashboard
+                    </a>
+                    <a href="{% url 'logout' %}" style="color: white; text-decoration: none; background: rgba(255,255,255,0.2); padding: 8px 16px; border-radius: 20px; font-weight: 500; transition: all 0.3s ease;">
+                        🚪 Logout
+                    </a>
+                </div>
+            {% else %}
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <a href="{% url 'login' %}" style="color: white; text-decoration: none; background: rgba(255,255,255,0.2); padding: 8px 16px; border-radius: 20px; font-weight: 500; transition: all 0.3s ease;">
+                        🔐 Login
+                    </a>
+                    <a href="{% url 'signup' %}" style="color: white; text-decoration: none; background: #28a745; padding: 10px 20px; border-radius: 25px; font-weight: bold; transition: all 0.3s ease;">
+                        📝 Sign Up
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; padding: 80px 40px; text-align: center;">
+        <div style="max-width: 800px; margin: 0 auto;">
+            <h1 style="font-size: 48px; margin: 0 0 20px 0; font-weight: bold; line-height: 1.2;">🏠 Staynest</h1>
+            <h2 style="font-size: 24px; margin: 0 0 30px 0; opacity: 0.9;">A Hassle-Free Destination</h2>
+            <p style="font-size: 18px; margin: 0 0 40px 0; opacity: 0.8; line-height: 1.6;">
+                Finding a new home shouldn't be a chore. Focus on your move, not the paperwork.
+                Discover amazing properties across Bangladesh with Staynest.
+            </p>
+
+            {% if user.is_authenticated %}
+                <a href="{% url 'dashboard' %}" style="background: white; color: #764ba2; padding: 15px 30px; text-decoration: none; border-radius: 30px; font-weight: bold; font-size: 18px; display: inline-block; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: all 0.3s ease;">
+                    🚀 Go to Dashboard
+                </a>
+            {% else %}
+                <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+                    <a href="{% url 'login' %}" style="background: white; color: #764ba2; padding: 15px 25px; text-decoration: none; border-radius: 30px; font-weight: bold; font-size: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: all 0.3s ease;">
+                        🔐 Login
+                    </a>
+                    <a href="{% url 'signup' %}" style="background: transparent; color: white; padding: 15px 25px; text-decoration: none; border: 2px solid white; border-radius: 30px; font-weight: bold; font-size: 16px; transition: all 0.3s ease;">
+                        📝 Get Started Free
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+
+    <!-- Search Section -->
+    <section style="padding: 60px 40px; background: white;">
+        <div style="max-width: 800px; margin: 0 auto;">
+            <h3 style="text-align: center; margin: 0 0 40px 0; color: #2c3e50; font-size: 24px;">🔍 Start Your Search</h3>
+
+            <form method="get" style="display: flex; gap: 15px; max-width: 700px; margin: 0 auto; flex-wrap: wrap; justify-content: center;">
+                <input type="text" name="search" placeholder="Search Destination (e.g., Dhaka, Sylhet, Chittagong)"
+                       style="flex: 1; min-width: 250px; padding: 15px 20px; border: 2px solid #e9ecef; border-radius: 25px; font-size: 16px; outline: none; transition: all 0.3s ease;"
+                       required>
+
+                <input type="date" name="date" style="padding: 15px 20px; border: 2px solid #e9ecef; border-radius: 25px; font-size: 16px; outline: none; transition: all 0.3s ease; min-width: 200px;"
+                       required>
+
+                <button type="submit" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 15px 30px; border: none; border-radius: 25px; font-size: 16px; font-weight: bold; cursor: pointer; transition: all 0.3s ease; white-space: nowrap;">
+                    🔍 Search Properties
+                </button>
+            </form>
+
+            <div style="text-align: center; margin-top: 20px;">
+                <p style="color: #6c757d; margin: 0;">Popular destinations: <strong>Dhaka</strong> • <strong>Sylhet</strong> • <strong>Chittagong</strong> • <strong>Rajshahi</strong></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Properties Section -->
+    <section style="padding: 60px 40px; background: #f8f9fa;">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <h3 style="text-align: center; margin: 0 0 50px 0; color: #2c3e50; font-size: 28px;">🏘️ Featured Properties</h3>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+                <!-- Property Card 1 -->
+                <div style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.1); transition: all 0.3s ease;">
+                    <div style="height: 200px; background: linear-gradient(45deg, #ff9a9e 0%, #fecfef 100%); display: flex; align-items: center; justify-content: center;">
+                        <div style="font-size: 48px;">🏢</div>
+                    </div>
+                    <div style="padding: 25px;">
+                        <h4 style="margin: 0 0 10px 0; color: #2c3e50; font-size: 20px;">Cozy Apartment in Gulshan</h4>
+                        <p style="margin: 0 0 15px 0; color: #6c757d; font-size: 14px;">Gulshan, Dhaka • 2 guests • 1 bedroom</p>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                            <span style="color: #28a745; font-weight: bold; font-size: 18px;">৳3,500/night</span>
+                            <div style="display: flex; align-items: center; gap: 5px;">
+                                <span style="color: #ffc107;">⭐</span>
+                                <span style="color: #6c757d; font-size: 14px;">4.8 (127)</span>
+                            </div>
+                        </div>
+                        <button style="width: 100%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; transition: all 0.3s ease;">
+                            View Details →
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Property Card 2 -->
+                <div style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.1); transition: all 0.3s ease;">
+                    <div style="height: 200px; background: linear-gradient(45deg, #a8edea 0%, #fed6e3 100%); display: flex; align-items: center; justify-content: center;">
+                        <div style="font-size: 48px;">🏡</div>
+                    </div>
+                    <div style="padding: 25px;">
+                        <h4 style="margin: 0 0 10px 0; color: #2c3e50; font-size: 20px;">Lakeview House in Sylhet</h4>
+                        <p style="margin: 0 0 15px 0; color: #6c757d; font-size: 14px;">Zindabazar, Sylhet • 4 guests • 2 bedrooms</p>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                            <span style="color: #28a745; font-weight: bold; font-size: 18px;">৳6,800/night</span>
+                            <div style="display: flex; align-items: center; gap: 5px;">
+                                <span style="color: #ffc107;">⭐</span>
+                                <span style="color: #6c757d; font-size: 14px;">4.9 (89)</span>
+                            </div>
+                        </div>
+                        <button style="width: 100%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; transition: all 0.3s ease;">
+                            View Details →
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Property Card 3 -->
+                <div style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.1); transition: all 0.3s ease;">
+                    <div style="height: 200px; background: linear-gradient(45deg, #ffecd2 0%, #fcb69f 100%); display: flex; align-items: center; justify-content: center;">
+                        <div style="font-size: 48px;">🏠</div>
+                    </div>
+                    <div style="padding: 25px;">
+                        <h4 style="margin: 0 0 10px 0; color: #2c3e50; font-size: 20px;">Modern Flat in Agrabad</h4>
+                        <p style="margin: 0 0 15px 0; color: #6c757d; font-size: 14px;">Agrabad, Chittagong • 3 guests • 1 bedroom</p>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                            <span style="color: #28a745; font-weight: bold; font-size: 18px;">৳4,200/night</span>
+                            <div style="display: flex; align-items: center; gap: 5px;">
+                                <span style="color: #ffc107;">⭐</span>
+                                <span style="color: #6c757d; font-size: 14px;">4.7 (156)</span>
+                            </div>
+                        </div>
+                        <button style="width: 100%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; transition: all 0.3s ease;">
+                            View Details →
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 50px;">
+                <a href="#" style="color: #667eea; text-decoration: none; font-weight: bold; font-size: 18px; border: 2px solid #667eea; padding: 12px 30px; border-radius: 30px; transition: all 0.3s ease;">
+                    Browse All Properties →
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section style="padding: 60px 40px; background: white;">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <h3 style="text-align: center; margin: 0 0 60px 0; color: #2c3e50; font-size: 28px;">✨ Why Choose Staynest?</h3>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: center;">
+                <!-- Feature 1 -->
+                <div>
+                    <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center;">
+                        <span style="font-size: 32px; color: white;">🔒</span>
+                    </div>
+                    <h4 style="margin: 0 0 15px 0; color: #2c3e50; font-size: 20px;">Secure Payments</h4>
+                    <p style="margin: 0; color: #6c757d; line-height: 1.6;">All transactions are protected with bank-level security. Your money is safe with us.</p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div>
+                    <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center;">
+                        <span style="font-size: 32px; color: white;">⚡</span>
+                    </div>
+                    <h4 style="margin: 0 0 15px 0; color: #2c3e50; font-size: 20px;">Instant Booking</h4>
+                    <p style="margin: 0; color: #6c757d; line-height: 1.6;">Book properties instantly without waiting for host approval. Start planning your stay now!</p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div>
+                    <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center;">
+                        <span style="font-size: 32px; color: white;">📱</span>
+                    </div>
+                    <h4 style="margin: 0 0 15px 0; color: #2c3e50; font-size: 20px;">Mobile Friendly</h4>
+                    <p style="margin: 0; color: #6c757d; line-height: 1.6;">Manage your bookings and listings on the go with our fully responsive mobile experience.</p>
+                </div>
+
+                <!-- Feature 4 -->
+                <div>
+                    <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center;">
+                        <span style="font-size: 32px; color: white;">💰</span>
+                    </div>
+                    <h4 style="margin: 0 0 15px 0; color: #2c3e50; font-size: 20px;">Best Prices</h4>
+                    <p style="margin: 0; color: #6c757d; line-height: 1.6;">No hidden fees or commissions. Get the best rates directly from property owners.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section style="padding: 60px 40px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-align: center;">
+        <div style="max-width: 800px; margin: 0 auto;">
+            <h2 style="font-size: 32px; margin: 0 0 20px 0; font-weight: bold;">Ready to Get Started?</h2>
+            <p style="font-size: 18px; margin: 0 0 30px 0; opacity: 0.9; line-height: 1.6;">
+                Join thousands of happy hosts and guests. Create your account today and start your journey with Staynest.
+            </p>
+
+            {% if user.is_authenticated %}
+                <a href="{% url 'dashboard' %}" style="background: white; color: #764ba2; padding: 15px 30px; text-decoration: none; border-radius: 30px; font-weight: bold; font-size: 18px; display: inline-block; box-shadow: 0 4px 15px rgba(0,0,0,0.2); margin-right: 15px;">
+                    🚀 Manage Your Account
+                </a>
+            {% else %}
+                <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+                    <a href="{% url 'login' %}" style="background: white; color: #764ba2; padding: 15px 25px; text-decoration: none; border-radius: 30px; font-weight: bold; font-size: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+                        🔐 Login
+                    </a>
+                    <a href="{% url 'signup' %}" style="background: transparent; color: white; padding: 15px 25px; text-decoration: none; border: 2px solid white; border-radius: 30px; font-weight: bold; font-size: 16px;">
+                        📝 Sign Up Free
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer style="background: #2c3e50; color: white; padding: 40px 20px; text-align: center;">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <div style="display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap; margin-bottom: 30px;">
+                <h3 style="margin: 0; color: white;">🏠 Staynest</h3>
+                <a href="#" style="color: #bdc3c7; text-decoration: none; font-size: 14px;">About</a>
+                <a href="#" style="color: #bdc3c7; text-decoration: none; font-size: 14px;">Contact</a>
+                <a href="#" style="color: #bdc3c7; text-decoration: none; font-size: 14px;">Privacy</a>
+                <a href="#" style="color: #bdc3c7; text-decoration: none; font-size: 14px;">Terms</a>
+            </div>
+            <p style="margin: 0; color: #bdc3c7; font-size: 14px;">
+                © 2025 Staynest. All rights reserved. Made with ❤️ in Bangladesh.
+            </p>
+            <p style="margin: 10px 0 0 0; color: #95a5a6; font-size: 12px;">
+                Connecting hosts and guests across Bangladesh with ease.
+            </p>
+        </div>
+    </footer>
+</body>
+</html>

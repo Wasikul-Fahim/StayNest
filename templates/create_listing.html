@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staynest - Create Listing</title>
+</head>
+<body style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background: #f8f9fa; min-height: 100vh;">
+    <!-- Header -->
+    <header style="background: white; padding: 20px 40px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100;">
+        <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;">
+            <a href="{% url 'dashboard' %}" style="display: flex; align-items: center; text-decoration: none;">
+                <h2 style="margin: 0; color: #2c3e50; font-size: 24px;">🏠 Staynest</h2>
+            </a>
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <span style="color: #6c757d;">Creating your first listing</span>
+                <a href="{% url 'dashboard' %}" style="background: #6c757d; color: white; padding: 10px 20px; text-decoration: none; border-radius: 8px; font-weight: 500; transition: all 0.3s ease;">
+                    ← Back to Dashboard
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <div style="max-width: 800px; margin: 40px auto; padding: 0 20px;">
+        <!-- Progress Bar -->
+        <div style="background: #e9ecef; border-radius: 25px; padding: 3px; margin-bottom: 40px;">
+            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); height: 20px; border-radius: 22px; width: 33%; transition: all 0.3s ease;"></div>
+        </div>
+
+        <!-- Messages -->
+        {% if messages %}
+            {% for message in messages %}
+                <div style="background: {% if message.tags == 'success' %}#d4edda{% else %}#f8d7da{% endif %};
+                            color: {% if message.tags == 'success' %}#155724{% else %}#721c24{% endif %};
+                            padding: 15px 20px; border-radius: 10px; margin-bottom: 30px;
+                            border: 1px solid {% if message.tags == 'success' %}#c3e6cb{% else %}#f5c6cb{% endif %};
+                            border-left: 4px solid {% if message.tags == 'success' %}#28a745{% else %}#dc3545{% endif %};">
+                    <strong>{{ message.tags|title }}:</strong> {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <!-- Create Listing Form -->
+        <div style="background: white; padding: 40px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1);">
+            <h1 style="margin: 0 0 30px 0; color: #2c3e50; font-size: 28px; text-align: center;">➕ Create New Listing</h1>
+            <p style="text-align: center; color: #6c757d; margin: 0 0 40px 0; font-size: 16px;">Share your space with travelers and earn money</p>
+
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <!-- Property Title -->
+                <div style="margin-bottom: 30px;">
+                    <label style="display: block; margin-bottom: 10px; color: #2c3e50; font-weight: 600; font-size: 16px;">🏠 Property Title</label>
+                    <input type="text" name="title" required maxlength="200"
+                           style="width: 100%; padding: 15px 20px; border: 2px solid #e9ecef; border-radius: 12px; font-size: 16px; box-sizing: border-box; transition: all 0.3s ease; outline: none; font-family: inherit;"
+                           placeholder="e.g., Cozy apartment in Gulshan with city view">
+                    <small style="color: #6c757d; font-size: 14px; margin-top: 8px; display: block;">Make it catchy and descriptive (max 200 characters)</small>
+                </div>
+
+                <!-- Location -->
+                <div style="margin-bottom: 30px;">
+                    <label style="display: block; margin-bottom: 10px; color: #2c3e50; font-weight: 600; font-size: 16px;">📍 Location</label>
+                    <div style="position: relative;">
+                        <input type="text" name="location" required
+                               style="width: 100%; padding: 15px 50px 15px 20px; border: 2px solid #e9ecef; border-radius: 12px; font-size: 16px; box-sizing: border-box; transition: all 0.3s ease; outline: none; font-family: inherit;"
+                               placeholder="e.g., Gulshan-1, Dhaka">
+                        <span style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: #6c757d;">📍</span>
+                    </div>
+                    <small style="color: #6c757d; font-size: 14px; margin-top: 8px; display: block;">City and neighborhood (e.g., Dhanmondi, Dhaka)</small>
+                </div>
+
+                <!-- Property Type -->
+                <div style="margin-bottom: 30px;">
+                    <label style="display: block; margin-bottom: 10px; color: #2c3e50; font-weight: 600; font-size: 16px;">🏘️ Property Type</label>
+                    <select name="property_type" required style="width: 100%; padding: 15px 20px; border: 2px solid #e9ecef; border-radius: 12px; font-size: 16px; box-sizing: border-box; transition: all 0.3s ease; outline: none; font-family: inherit; background: white;">
+                        <option value="">Select property type</option>
+                        <option value="apartment">Apartment</option>
+                        <option value="house">House</option>
+                        <option value="villa">Villa</option>
+                        <option value="condo">Condominium</option>
+                        <option value="studio">Studio</option>
+                        <option value="room">Private Room</option>
+                        <option value="other">Other</option>
+                    </select>
+                    <small style="color: #6c757d; font-size: 14px; margin-top: 8px; display: block;">What type of space are you offering?</small>
+                </div>
+
+                <!-- Guest Capacity -->
+                <div style="margin-bottom: 30px; display: flex; gap: 20px;">
+                    <div style="flex: 1;">
+                        <label style="display: block; margin-bottom: 10px; color: #2c3e50; font-weight: 600; font-size: 16px;">👥 Max Guests</label>
+                        <input type="number" name="max_guests" required min="1" max="16" value="2"
+                               style="width: 100%; padding: 15px 20px; border: 2px solid #e9ecef; border-radius: 12px; font-size: 16px; box-sizing: border-box; transition: all 0.3s ease; outline: none; font-family: inherit; text-align: center;"
+                               placeholder="2">
+                        <small style="color: #6c757d; font-size: 14px; margin-top: 8px; display: block;">Maximum number of guests</small>
+                    </div>
+                    <div style="flex: 1;">
+                        <label style="display: block; margin-bottom: 10px; color: #2c3e50; font-weight: 600; font-size: 16px;">🛏️ Bedrooms</label>
+                        <input type="number" name="bedrooms" required min="1" max="10" value="1"
+                               style="width: 100%; padding: 15px 20px; border: 2px solid #e9ecef; border-radius: 12px; font-size: 16px; box-sizing: border-box; transition: all 0.3s ease; outline: none; font-family: inherit; text-align: center;"
+                               placeholder="1">
+                        <small style="color: #6c757d; font-size: 14px; margin-top: 8px; display: block;">Number of bedrooms</small>
+                    </div>
+                </div>
+
+                <!-- Price -->
+                <div style="margin-bottom: 30px;">
+                    <label style="display: block; margin-bottom: 10px; color: #2c3e50; font-weight: 600; font-size: 16px;">💰 Price per Night</label>
+                    <div style="position: relative;">
+                        <span style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #28a745; font-weight: bold; font-size: 18px; z-index: 2;">৳</span>
+                        <input type="number" name="price_per_night" required min="500" max="50000" step="100"
+                               style="width: 100%; padding: 15px 20px 15px 50px; border: 2px solid #e9ecef; border-radius: 12px; font-size: 16px; box-sizing: border-box; transition: all 0.3s ease; outline: none; font-family: inherit;"
+                               placeholder="e.g., 3500">
+                    </div>
+                    <small style="color: #6c757d; font-size: 14px; margin-top: 8px; display: block;">Set your nightly rate (minimum ৳500)</small>
+                </div>
+
+                <!-- Description -->
+                <div style="margin-bottom: 30px;">
+                    <label style="display: block; margin-bottom: 10px; color: #2c3e50; font-weight: 600; font-size: 16px;">📝 Description</label>
+                    <textarea name="description" rows="4" required maxlength="1000"
+                              style="width: 100%; padding: 15px 20px; border: 2px solid #e9ecef; border-radius: 12px; font-size: 16px; box-sizing: border-box; transition: all 0.3s ease; outline: none; font-family: inherit; resize: vertical; min-height: 120px;"
+                              placeholder="Tell guests about your space (amenities, location highlights, house rules, etc.)"></textarea>
+                    <div style="text-align: right; margin-top: 8px;">
+                        <small style="color: #6c757d; font-size: 14px;">0/1000 characters</small>
+                    </div>
+                </div>
+
+                <!-- Amenities (Multiple Choice) -->
+                <div style="margin-bottom: 30px;">
+                    <label style="display: block; margin-bottom: 15px; color: #2c3e50; font-weight: 600; font-size: 16px;">🛋️ Amenities</label>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px;">
+                        <label style="display: flex; align-items: center; gap: 10px; padding: 12px; border: 2px solid #e9ecef; border-radius: 10px; cursor: pointer; transition: all 0.3s ease; font-size: 14px;">
+                            <input type="checkbox" name="amenities" value="wifi" style="width: 18px; height: 18px; accent-color: #667eea;">
+                            📶 WiFi
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 10px; padding: 12px; border: 2px solid #e9ecef; border-radius: 10px; cursor: pointer; transition: all 0.3s ease; font-size: 14px;">
+                            <input type="checkbox" name="amenities" value="ac" style="width: 18px; height: 18px; accent-color: #667eea;">
+                            ❄️ Air Conditioning
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 10px; padding: 12px; border: 2px solid #e9ecef; border-radius: 10px; cursor: pointer; transition: all 0.3s ease; font-size: 14px;">
+                            <input type="checkbox" name="amenities" value="kitchen" style="width: 18px; height: 18px; accent-color: #667eea;">
+                            🍳 Kitchen
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 10px; padding: 12px; border: 2px solid #e9ecef; border-radius: 10px; cursor: pointer; transition: all 0.3s ease; font-size: 14px;">
+                            <input type="checkbox" name="amenities" value="parking" style="width: 18px; height: 18px; accent-color: #667eea;">
+                            🚗 Parking
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 10px; padding: 12px; border: 2px solid #e9ecef; border-radius: 10px; cursor: pointer; transition: all 0.3s ease; font-size: 14px;">
+                            <input type="checkbox" name="amenities" value="pool" style="width: 18px; height: 18px; accent-color: #667eea;">
+                            🏊 Pool
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 10px; padding: 12px; border: 2px solid #e9ecef; border-radius: 10px; cursor: pointer; transition: all 0.3s ease; font-size: 14px;">
+                            <input type="checkbox" name="amenities" value="gym" style="width: 18px; height: 18px; accent-color: #667eea;">
+                            💪 Gym
+                        </label>
+                    </div>
+                    <small style="color: #6c757d; font-size: 14px; margin-top: 15px; display: block;">Select amenities available at your property</small>
+                </div>
+
+                <!-- Photos Upload -->
+                <div style="margin-bottom: 30px;">
+                    <label style="display: block; margin-bottom: 10px; color: #2c3e50; font-weight: 600; font-size: 16px;">📸 Photos</label>
+                    <div style="border: 2px dashed #dee2e6; border-radius: 12px; padding: 40px; text-align: center; background: #f8f9fa; transition: all 0.3s ease; cursor: pointer;">
+                        <input type="file" name="photos" multiple accept="image/*" required style="display: none;" id="photoInput">
+                        <label for="photoInput" style="cursor: pointer; display: block;">
+                            <div style="font-size: 48px; color: #6c757d; margin-bottom: 15px;">📷</div>
+                            <p style="margin: 0 0 5px 0; color: #495057; font-weight: 500;">Click to add photos</p>
+                            <p style="margin: 0; color: #6c757d; font-size: 14px;">Upload at least 5 high-quality photos (Max 10MB each)</p>
+                        </label>
+                        <div id="photoPreview" style="margin-top: 15px; display: none;">
+                            <p style="color: #28a745; font-size: 14px;">Photos selected: <span id="photoCount">0</span>/5</p>
+                        </div>
+                    </div>
+                    <small style="color: #6c757d; font-size: 14px; margin-top: 10px; display: block;">Great photos help you get more bookings</small>
+                </div>
+
+                <!-- House Rules -->
+                <div style="margin-bottom: 30px;">
+                    <label style="display: block; margin-bottom: 10px; color: #2c3e50; font-weight: 600; font-size: 16px;">📜 House Rules</label>
+                    <div style="border: 1px solid #dee2e6; border-radius: 8px; padding: 20px; background: #f8f9fa;">
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 15px;">
+                            <label style="display: flex; align-items: center; gap: 10px; padding: 8px; border-radius: 6px; cursor: pointer; transition: all 0.3s ease; font-size: 14px;">
+                                <input type="checkbox" name="rules" value="nosmoking" style="width: 18px; height: 18px; accent-color: #dc3545;">
+                                🚭 No Smoking
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 10px; padding: 8px; border-radius: 6px; cursor: pointer; transition: all 0.3s ease; font-size: 14px;">
+                                <input type="checkbox" name="rules" value="nopets" style="width: 18px; height: 18px; accent-color: #dc3545;">
+                                🚫 No Pets
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 10px; padding: 8px; border-radius: 6px; cursor: pointer; transition: all 0.3s ease; font-size: 14px;">
+                                <input type="checkbox" name="rules" value="noid" style="width: 18px; height: 18px; accent-color: #dc3545;">
+                                🆔 ID Required
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 10px; padding: 8px; border-radius: 6px; cursor: pointer; transition: all 0.3s ease; font-size: 14px;">
+                                <input type="checkbox" name="rules" value="noparties" style="width: 18px; height: 18px; accent-color: #dc3545;">
+                                🎉 No Parties
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 10px; padding: 8px; border-radius: 6px; cursor: pointer; transition: all 0.3s ease; font-size: 14px;">
+                                <input type="checkbox" name="rules" value="quiet" style="width: 18px; height: 18px; accent-color: #dc3545;">
+                                🤫 Quiet Hours
+                            </label>
+                        </div>
+                        <textarea name="custom_rules" rows="3" placeholder="Any additional house rules..."
+                                  style="width: 100%; padding: 12px; border: 1px solid #dee2e6; border-radius: 6px; font-size: 14px; box-sizing: border-box; resize: vertical; font-family: inherit;"></textarea>
+                    </div>
+                    <small style="color: #6c757d; font-size: 14px; margin-top: 10px; display: block;">Set clear expectations for your guests</small>
+                </div>
+
+                <!-- Submit Button -->
+                <div style="text-align: center; margin-top: 40px;">
+                    <button type="submit" style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%); color: white; padding: 18px 50px; border: none; border-radius: 12px; font-size: 18px; font-weight: bold; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 20px rgba(40, 167, 69, 0.3); min-width: 200px;">
+                        🚀 Publish Listing
+                    </button>
+                    <p style="margin: 15px 0 0 0; color: #6c757d; font-size: 14px;">
+                        By clicking "Publish Listing", you agree to our <a href="#" style="color: #667eea;">Host Terms</a>
+                    </p>
+                </div>
+            </form>
+        </div>
+
+        <!-- Tips Section -->
+        <div style="background: #f8f9fa; padding: 30px; border-radius: 12px; margin-top: 40px; border-left: 4px solid #28a745;">
+            <h3 style="margin: 0 0 20px 0; color: #2c3e50; font-size: 20px;">💡 Tips for Success</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                <div>
+                    <h4 style="margin: 0 0 8px 0; color: #495057; font-size: 16px;">📸 High-Quality Photos</h4>
+                    <p style="margin: 0; color: #6c757d; font-size: 14px; line-height: 1.5;">Listings with 10+ clear photos get 3x more bookings. Show all rooms and amenities.</p>
+                </div>
+                <div>
+                    <h4 style="margin: 0 0 8px 0; color: #495057; font-size: 16px;">💰 Competitive Pricing</h4>
+                    <p style="margin: 0; color: #6c757d; font-size: 14px; line-height: 1.5;">Research similar listings in your area. Consider seasonal pricing for better occupancy.</p>
+                </div>
+                <div>
+                    <h4 style="margin: 0 0 8px 0; color: #495057; font-size: 16px;">⭐ Great Descriptions</h4>
+                    <p style="margin: 0; color: #6c757d; font-size: 14px; line-height: 1.5;">Highlight what makes your space unique. Mention nearby attractions and transportation.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Photo upload functionality
+        const photoInput = document.getElementById('photoInput');
+        const photoPreview = document.getElementById('photoPreview');
+        const photoCount = document.getElementById('photoCount');
+        const uploadArea = photoInput.parentNode;
+
+        photoInput.addEventListener('change', function(e) {
+            const files = Array.from(e.target.files);
+            const validFiles = files.filter(file => file.type.startsWith('image/') && file.size <= 10 * 1024 * 1024);
+
+            if (validFiles.length > 0) {
+                photoPreview.style.display = 'block';
+                photoCount.textContent = Math.min(validFiles.length, 5);
+
+                // Update upload area
+                uploadArea.style.borderColor = '#28a745';
+                uploadArea.style.background = '#e8f5e8';
+                uploadArea.innerHTML = `
+                    <div style="font-size: 48px; color: #28a745; margin-bottom: 15px;">✅</div>
+                    <p style="margin: 0 0 5px 0; color: #155724; font-weight: 500;">${validFiles.length} photo(s) selected</p>
+                    <p style="margin: 0; color: #6c757d; font-size: 14px;">Click to change photos</p>
+                    <div id="photoPreview" style="margin-top: 15px;">
+                        <p style="color: #28a745; font-size: 14px;">Photos selected: ${Math.min(validFiles.length, 5)}/5</p>
+                    </div>
+                `;
+
+                // Re-attach event listener
+                uploadArea.addEventListener('click', () => photoInput.click());
+            } else if (files.length > 0) {
+                alert('Please select valid image files (JPG, PNG) under 10MB each.');
+                photoInput.value = '';
+            }
+        });
+
+        // Drag and drop functionality
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.style.borderColor = '#667eea';
+            uploadArea.style.background = '#f0f4ff';
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.style.borderColor = '#dee2e6';
+            uploadArea.style.background = '#f8f9fa';
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.style.borderColor = '#dee2e6';
+            uploadArea.style.background = '#f8f9fa';
+
+            const files = Array.from(e.dataTransfer.files);
+            photoInput.files = e.dataTransfer.files;
+            photoInput.dispatchEvent(new Event('change', { bubbles: true }));
+        });
+
+        // Character counter for description
+        const description = document.querySelector('textarea[name="description"]');
+        const charCounter = description.parentNode.querySelector('small');
+
+        description.addEventListener('input', function() {
+            const remaining = 1000 - this.value.length;
+            charCounter.textContent = `${this.value.length}/1000 characters`;
+
+            if (remaining < 0) {
+                charCounter.style.color = '#dc3545';
+            } else if (this.value.length > 800) {
+                charCounter.style.color = '#ffc107';
+            } else {
+                charCounter.style.color = '#6c757d';
+            }
+        });
+
+        // Form validation
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const title = document.querySelector('input[name="title"]').value.trim();
+            const location = document.querySelector('input[name="location"]').value.trim();
+            const price = document.querySelector('input[name="price_per_night"]').value;
+            const description = document.querySelector('textarea[name="description"]').value.trim();
+            const propertyType = document.querySelector('select[name="property_type"]').value;
+            const photos = document.querySelector('input[name="photos"]').files;
+
+            if (!title || title.length < 10) {
+                e.preventDefault();
+                alert('Please enter a descriptive title (minimum 10 characters).');
+                return false;
+            }
+
+            if (!location || location.length < 5) {
+                e.preventDefault();
+                alert('Please enter a valid location (minimum 5 characters).');
+                return false;
+            }
+
+            if (!price || price < 500) {
+                e.preventDefault();
+                alert('Price must be at least ৳500 per night.');
+                return false;
+            }
+
+            if (!description || description.length < 50) {
+                e.preventDefault();
+                alert('Please provide a description (minimum 50 characters).');
+                return false;
+            }
+
+            if (!propertyType) {
+                e.preventDefault();
+                alert('Please select a property type.');
+                return false;
+            }
+
+            if (!photos || photos.length === 0) {
+                e.preventDefault();
+                alert('Please upload at least one photo.');
+                return false;
+            }
+
+            if (photos.length < 5) {
+                if (!confirm(`You selected ${photos.length} photo(s). We recommend at least 5 photos for better visibility. Continue anyway?`)) {
+                    e.preventDefault();
+                    return false;
+                }
+            }
+
+            // Show loading state
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '⏳ Publishing...';
+            submitBtn.disabled = true;
+            submitBtn.style.opacity = '0.7';
+        });
+
+        // Input focus effects
+        document.querySelectorAll('input, select, textarea').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.style.borderColor = '#667eea';
+                this.style.boxShadow = '0 0 0 3px rgba(102, 126, 234, 0.1)';
+            });
+
+            input.addEventListener('blur', function() {
+                if (this.value.trim() === '') {
+                    this.style.borderColor = '#e9ecef';
+                } else {
+                    this.style.borderColor = '#28a745';
+                }
+                this.style.boxShadow = 'none';
+            });
+        });
+
+        // Auto-format price input
+        document.querySelector('input[name="price_per_night"]').addEventListener('input', function() {
+            let value = this.value.replace(/[^0-9]/g, '');
+            if (value) {
+                this.value = parseInt(value).toLocaleString('bn-BD');
+            }
+        });
+    </script>
+</body>
+</html>
