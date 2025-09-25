@@ -1,8 +1,8 @@
 :root {
-    --primary-color: #89dcb5;
-    --secondary-color: #66be97;
+    --primary-color: #66be97;
+    --secondary-color: #c8e8d4;
     --text-color: #1d362a;
-    --bg-color: #dff0e6;
+    --bg-color: #edfcf3;
     --card-bg: linear-gradient(45deg, #9ee6d9, #baffc8);
     --card-bg2: linear-gradient(45deg, #54ad9d, #76cd87);;
     --bg-img: linear-gradient(135deg, #bcd1c5 0%, #bedfcc 100%);
@@ -18,7 +18,7 @@ html {
 
 body {
     background-color: var(--bg-color);
-    background: var(--bg-img);
+    background: var(--bg-color);
     background-repeat: no-repeat;
     color: var(--text-color);
     font-size: 1rem;
@@ -50,11 +50,11 @@ header {
 
 
 .btn {
-    color: var(--text-color); 
+    color: #126a4b; 
     text-decoration: none; 
     background: var(--card-bg); 
     padding: 8px 16px;
-    border: 2px solid #89dcb5; 
+    border: 2px solid #126a4b; 
     border-radius: 20px; 
     font-weight: 500; 
     transition: all 0.3s ease;
@@ -65,11 +65,11 @@ header {
 
 
 #modBtn {
-    color: #035237; 
+    color: #126a4b; 
     text-decoration: none; 
-    background: var(--card-bg2); 
+    background: var(--primary-color); 
     padding: 8px 16px;
-    border: 2px solid #7ac492; 
+    border: 2px solid #126a4b; 
     border-radius: 20px; 
     font-weight: 500; 
     transition: all 0.3s ease;

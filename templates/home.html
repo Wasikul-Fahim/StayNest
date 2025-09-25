@@ -41,7 +41,7 @@
     </header>
 
     <!-- Hero Section -->
-    <section style="background: var(--secondary-color); color:  var(--text-color); padding: 80px 40px; text-align: center;">
+    <section style="background: var(--primary-color); color:  var(--text-color); padding: 80px 40px; text-align: center;">
         <div style="max-width: 800px; margin: 0 auto;">
             <h1 style="font-size: 3rem; margin: 0 0 20px 0; font-weight: bold; line-height: 1.2;">Staynest</h1>
             <h2 style="font-size: 1.5rem; margin: 0 0 30px 0; opacity: 0.9;">A Hassle-Free Destination</h2>
@@ -58,7 +58,7 @@
                         🔐 Login
                     </a>
                     <a href="{% url 'signup' %}" style="background: transparent; color: var(--bg-color); padding: 15px 25px; text-decoration: none; border: 2px solid var(--bg-color); border-radius: 30px; font-weight: bold; font-size: 16px; transition: all 0.3s ease;">
-                        📝 Get Started Free
+                        Get Started Free
                     </a>
                 </div>
             {% endif %}
@@ -66,20 +66,20 @@
     </section>
 
     <!-- Search Section -->
-    <section style="padding: 60px 40px; background: white;">
+    <section style="padding: 60px 40px; background: var(--secondary-color);">
         <div style="max-width: 800px; margin: 0 auto;">
-            <h3 style="text-align: center; margin: 0 0 40px 0; color: #2c3e50; font-size: 24px;">🔍 Start Your Search</h3>
+            <h3 style="text-align: center; margin: 0 0 40px 0; color: var(--text-color); font-size: 1.5rem;">🔍 Start Your Search</h3>
 
             <form method="get" style="display: flex; gap: 15px; max-width: 700px; margin: 0 auto; flex-wrap: wrap; justify-content: center;">
                 <input type="text" name="search" placeholder="Search Destination (e.g., Dhaka, Sylhet, Chittagong)"
-                       style="flex: 1; min-width: 250px; padding: 15px 20px; border: 2px solid #e9ecef; border-radius: 25px; font-size: 16px; outline: none; transition: all 0.3s ease;"
+                       style="flex: 1; min-width: 250px; padding: 15px 20px; border: 2px solid var(--primary-color); border-radius: 25px; font-size: 16px; outline: none; transition: all 0.3s ease; background: var(--bg-color);"
                        required>
 
-                <input type="date" name="date" style="padding: 15px 20px; border: 2px solid #e9ecef; border-radius: 25px; font-size: 16px; outline: none; transition: all 0.3s ease; min-width: 200px;"
+                <input type="date" name="date" style="padding: 15px 20px; border: 2px solid var(--primary-color); border-radius: 25px; font-size: 16px; outline: none; transition: all 0.3s ease; min-width: 200px; background: var(--bg-color);"
                        required>
 
-                <button type="submit" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 15px 30px; border: none; border-radius: 25px; font-size: 16px; font-weight: bold; cursor: pointer; transition: all 0.3s ease; white-space: nowrap;">
-                    🔍 Search Properties
+                <button type="submit" class="btn" id="modBtn" style="font-size: 1.3rem; margin: 1rem;">
+                    Search Properties
                 </button>
             </form>
 
@@ -90,13 +90,13 @@
     </section>
 
     <!-- Featured Properties Section -->
-    <section style="padding: 60px 40px; background: #f8f9fa;">
+    <section style="padding: 60px 40px; ">
         <div style="max-width: 1200px; margin: 0 auto;">
             <h3 style="text-align: center; margin: 0 0 50px 0; color: #2c3e50; font-size: 28px;">🏘️ Featured Properties</h3>
 
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
                 <!-- Property Card 1 -->
-                <div style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.1); transition: all 0.3s ease;">
+                <div style="background: #f4f9f4; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.1); transition: all 0.3s ease;">
                     <div style="height: 200px; background: linear-gradient(45deg, #ff9a9e 0%, #fecfef 100%); display: flex; align-items: center; justify-content: center;">
                         <div style="font-size: 48px;">🏢</div>
                     </div>
@@ -110,14 +110,14 @@
                                 <span style="color: #6c757d; font-size: 14px;">4.8 (127)</span>
                             </div>
                         </div>
-                        <button style="width: 100%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; transition: all 0.3s ease;">
+                        <button style="width: 100%; background: var(--primary-color); color: var(--bg-color); padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; transition: all 0.3s ease;">
                             View Details →
                         </button>
                     </div>
                 </div>
 
                 <!-- Property Card 2 -->
-                <div style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.1); transition: all 0.3s ease;">
+                <div style="background: #f4f9f4; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.1); transition: all 0.3s ease;">
                     <div style="height: 200px; background: linear-gradient(45deg, #a8edea 0%, #fed6e3 100%); display: flex; align-items: center; justify-content: center;">
                         <div style="font-size: 48px;">🏡</div>
                     </div>
@@ -131,14 +131,14 @@
                                 <span style="color: #6c757d; font-size: 14px;">4.9 (89)</span>
                             </div>
                         </div>
-                        <button style="width: 100%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; transition: all 0.3s ease;">
+                        <button style="width: 100%; background: var(--primary-color); color: var(--bg-color);  padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; transition: all 0.3s ease;">
                             View Details →
                         </button>
                     </div>
                 </div>
 
                 <!-- Property Card 3 -->
-                <div style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.1); transition: all 0.3s ease;">
+                <div style="background: #f4f9f4; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.1); transition: all 0.3s ease;">
                     <div style="height: 200px; background: linear-gradient(45deg, #ffecd2 0%, #fcb69f 100%); display: flex; align-items: center; justify-content: center;">
                         <div style="font-size: 48px;">🏠</div>
                     </div>
@@ -152,7 +152,7 @@
                                 <span style="color: #6c757d; font-size: 14px;">4.7 (156)</span>
                             </div>
                         </div>
-                        <button style="width: 100%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; transition: all 0.3s ease;">
+                        <button style="width: 100%; background: var(--primary-color); color: var(--bg-color);  padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; transition: all 0.3s ease;">
                             View Details →
                         </button>
                     </div>
@@ -160,7 +160,7 @@
             </div>
 
             <div style="text-align: center; margin-top: 50px;">
-                <a href="#" style="color: #667eea; text-decoration: none; font-weight: bold; font-size: 18px; border: 2px solid #667eea; padding: 12px 30px; border-radius: 30px; transition: all 0.3s ease;">
+                <a href="#" style="color: var(--text-color); text-decoration: none; font-weight: bold; font-size: 18px; border: 2px solid var(--text-color); padding: 12px 30px; border-radius: 30px; transition: all 0.3s ease;">
                     Browse All Properties →
                 </a>
             </div>
@@ -168,7 +168,7 @@
     </section>
 
     <!-- Features Section -->
-    <section style="padding: 60px 40px; background: white;">
+    <section style="padding: 60px 40px; border-top: 2px solid var(--secondary-color);">
         <div style="max-width: 1200px; margin: 0 auto;">
             <h3 style="text-align: center; margin: 0 0 60px 0; color: #2c3e50; font-size: 28px;">✨ Why Choose Staynest?</h3>
 
@@ -212,7 +212,7 @@
         </div>
     </section>
 
-    <!-- Call to Action -->
+    <!-- Call to Action
     <section style="padding: 60px 40px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-align: center;">
         <div style="max-width: 800px; margin: 0 auto;">
             <h2 style="font-size: 32px; margin: 0 0 20px 0; font-weight: bold;">Ready to Get Started?</h2>
@@ -232,7 +232,7 @@
                     <a href="{% url 'signup' %}" style="background: transparent; color: white; padding: 15px 25px; text-decoration: none; border: 2px solid white; border-radius: 30px; font-weight: bold; font-size: 16px;">
                         📝 Sign Up Free
                     </a>
-                </div>
+                </div> -->
             {% endif %}
         </div>
     </section>
