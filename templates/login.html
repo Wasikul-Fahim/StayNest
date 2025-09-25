@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load static %}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Staynest - Login</title>
+    <link rel="stylesheet" href="{% static 'css/global.css' %}">
 </head>
-<body style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center;">
-    <div style="width: 100%; max-width: 400px; padding: 20px;">
+<body style="background: linear-gradient(135deg, #66eacd 0%, #72d185 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center;">
+    <div style="width: 100%; max-width: 600px; padding: 20px;">
         <!-- Logo Header -->
         <div style="text-align: center; margin-bottom: 40px;">
-            <h1 style="color: white; margin: 0; font-size: 32px; font-weight: bold;">🏠 Staynest</h1>
-            <p style="color: rgba(255,255,255,0.8); margin: 5px 0 0 0; font-size: 16px;">Welcome Back!</p>
+            <a href="{% url 'home' %}"><img id="logo" src="/static/img/StayNest_Logo.png" alt="StayNest" style="background-color: var(--secondary-color); border-radius: 10px;"></a>
+            <h1 style=" margin: 0; font-size: 3rem; font-weight: bold;">Staynest</h1>
+            <p style=" margin: 5px 0 0 0; font-size: 1rem;">Welcome Back!</p>
         </div>
 
         <!-- Login Card -->
-        <div style="background: white; padding: 40px; border-radius: 15px; box-shadow: 0 15px 35px rgba(0,0,0,0.1);">
+        <div style="background: var(--bg-color); padding: 40px; border-radius: 15px; box-shadow: 0 15px 35px rgba(0,0,0,0.1);">
             <!-- Error Messages -->
             {% if messages %}
                 {% for message in messages %}
@@ -30,7 +33,7 @@
 
                 <!-- Email Field -->
                 <div style="margin-bottom: 25px;">
-                    <label style="display: block; margin-bottom: 8px; color: #2c3e50; font-weight: 600; font-size: 14px;">📧 Email Address</label>
+                    <label style="display: block; margin-bottom: 8px; ; font-weight: 600; font-size: 0.8rem;">Email Address</label>
                     <input type="email" name="email" required
                            style="width: 100%; padding: 14px 16px; border: 2px solid #e9ecef; border-radius: 10px; font-size: 16px; box-sizing: border-box; transition: all 0.3s ease; outline: none;"
                            placeholder="Enter your email address">
@@ -39,7 +42,7 @@
 
                 <!-- Password Field -->
                 <div style="margin-bottom: 25px;">
-                    <label style="display: block; margin-bottom: 8px; color: #2c3e50; font-weight: 600; font-size: 14px;">🔐 Password</label>
+                    <label style="display: block; margin-bottom: 8px; ; font-weight: 600; font-size: 0.8rem;">Password</label>
                     <input type="password" name="password" required
                            style="width: 100%; padding: 14px 16px; border: 2px solid #e9ecef; border-radius: 10px; font-size: 16px; box-sizing: border-box; transition: all 0.3s ease; outline: none;"
                            placeholder="Enter your password">
@@ -52,15 +55,15 @@
                 </div>
 
                 <!-- Login Button -->
-                <button type="submit" style="width: 100%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 16px; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);">
-                    🔐 Sign In to Your Account
+                <button type="submit" style="width: 100%; background: var(--primary-color); color: rgb(233, 236, 234); padding: 16px; border: none; border-radius: 10px; font-size: 0.8rem; font-weight: bold; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);">
+                    Sign In to Your Account
                 </button>
             </form>
 
             <!-- Divider -->
             <div style="text-align: center; margin: 30px 0; position: relative;">
-                <span style="background: white; padding: 0 15px; color: #6c757d; font-size: 14px;">OR</span>
                 <div style="position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: #e9ecef;"></div>
+                <span style="background: var(--bg-color); padding: 0 15px; color: #6c757d; font-size: 14px;">OR</span>
             </div>
 
             <!-- Social Login Buttons -->
@@ -76,16 +79,16 @@
             <!-- Sign Up Link -->
             <div style="text-align: center; padding-top: 20px; border-top: 1px solid #e9ecef;">
                 <p style="margin: 0 0 15px 0; color: #6c757d;">Don't have an account?</p>
-                <a href="{% url 'signup' %}" style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%); color: white; padding: 14px 30px; text-decoration: none; border-radius: 25px; font-weight: bold; font-size: 16px; display: inline-block; box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4); transition: all 0.3s ease;">
+                <a href="{% url 'signup' %}" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 14px 30px; text-decoration: none; border-radius: 25px; font-weight: bold; font-size: 16px; display: inline-block; box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4); transition: all 0.3s ease;">
                     📝 Create Account
                 </a>
             </div>
         </div>
 
         <!-- Footer -->
-        <div style="text-align: center; margin-top: 40px; color: rgba(255,255,255,0.7); font-size: 12px;">
+        <div style="text-align: center; margin-top: 40px; font-size: 12px;">
             <p style="margin: 0;">© 2025 Staynest. All rights reserved.</p>
-            <p style="margin: 5px 0 0 0;"><a href="#" style="color: rgba(255,255,255,0.7); text-decoration: none;">Privacy Policy</a> • <a href="#" style="color: rgba(255,255,255,0.7); text-decoration: none;">Terms of Service</a></p>
+            <p style="margin: 5px 0 0 0;"><a href="#" style="text-decoration: none;">Privacy Policy</a> • <a href="#" style="text-decoration: none;">Terms of Service</a></p>
         </div>
     </div>
 
