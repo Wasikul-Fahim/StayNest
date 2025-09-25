@@ -35,9 +35,16 @@ def is_valid_password(password):
     return True, "Password is valid."
 
 
+# Navbar
+
+
+
 # Home page
 def home(request):
     return render(request, 'home.html')
+
+def hm(request): 
+    return render(request, 'hm.html')
 
 
 # Login view - Redirect to dashboard

@@ -1,0 +1,80 @@
+:root {
+    --primary-color: #89dcb5;
+    --secondary-color: #66be97;
+    --text-color: #1d362a;
+    --bg-color: #dff0e6;
+    --card-bg: linear-gradient(45deg, #9ee6d9, #baffc8);
+    --card-bg2: linear-gradient(45deg, #54ad9d, #76cd87);;
+    --bg-img: linear-gradient(135deg, #bcd1c5 0%, #bedfcc 100%);
+    transition: background-color 0.3s ease-in-out,
+        color 0.3s ease-in-out,
+        border-color 0.3s ease-in-out;
+}
+
+
+html {
+    min-height: 100%;
+}
+
+body {
+    background-color: var(--bg-color);
+    background: var(--bg-img);
+    background-repeat: no-repeat;
+    color: var(--text-color);
+    font-size: 1rem;
+    font-weight: 300;
+    letter-spacing: 2px;
+    font-family: "Faculty Glyphic", Helvetica, sans-serif;
+    line-height: 1.5;
+    margin: 0;
+}
+
+header {
+    background: #c2e0cb; 
+    padding: 20px 40px; 
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+
+
+
+
+
+.navContainer {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.btn {
+    color: var(--text-color); 
+    text-decoration: none; 
+    background: var(--card-bg); 
+    padding: 8px 16px;
+    border: 2px solid #89dcb5; 
+    border-radius: 20px; 
+    font-weight: 500; 
+    transition: all 0.3s ease;
+}
+
+
+
+
+
+#modBtn {
+    color: #035237; 
+    text-decoration: none; 
+    background: var(--card-bg2); 
+    padding: 8px 16px;
+    border: 2px solid #7ac492; 
+    border-radius: 20px; 
+    font-weight: 500; 
+    transition: all 0.3s ease;
+}
+
+#logo {
+    width: 4.5rem;
+}
