@@ -19,9 +19,12 @@ from django.urls import path
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from dashboard.views import home,dashboard
 
 urlpatterns = ([
     path('admin/', admin.site.urls),
+                   path('', home, name="home"),
+                   path('', dashboard, name="dashboard"),
     path('', include('accounts.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT))
 if settings.DEBUG:
