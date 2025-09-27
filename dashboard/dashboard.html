@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>StayNest Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="sidebar">
+        <h2>staynest</h2>
+        <ul>
+            <li>My Listings</li>
+            <li>My Bookings</li>
+            <li>Performance</li>
+            <li>Settings</li>
+        </ul>
+    </div>
+
+    <div class="main">
+        <h1>Good evening, {{ user_name }}!</h1>
+        <button class="create-btn">Create Listing</button>
+
+        <div class="cards">
+            <div class="card">Earnings (Sept)<br><b>৳ {{ earnings }}</b><br>{{ earnings_growth }}</div>
+            <div class="card">Occupancy<br><b>{{ occupancy }}%</b></div>
+            <div class="card">Spendings (Sept)<br><b>৳ {{ spendings }}</b><br>{{ spendings_change }}</div>
+            <div class="card">Upcoming Bookings<br><b>{{ upcoming_bookings }}</b></div>
+        </div>
+
+        <div class="tables">
+            <div class="table">
+                <h3>Upcoming Stays</h3>
+                <table>
+                    <tr><th>Guest Name</th><th>Dates</th><th>Listing</th><th>Status</th></tr>
+                    {% for stay in upcoming_stays %}
+                        <tr>
+                            <td>{{ stay.guest }}</td>
+                            <td>{{ stay.dates }}</td>
+                            <td>{{ stay.listing }}</td>
+                            <td>{{ stay.status }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+
+            <div class="table">
+                <h3>Upcoming Bookings</h3>
+                <table>
+                    <tr><th>Listing</th><th>Dates</th><th>Rent</th><th>Status</th></tr>
+                    {% for rent in upcoming_rentals %}
+                        <tr>
+                            <td>{{ rent.listing }}</td>
+                            <td>{{ rent.dates }}</td>
+                            <td>{{ rent.rent }}</td>
+                            <td>{{ rent.status }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
