@@ -9,9 +9,118 @@ from datetime import datetime, timedelta
 import re
 from decimal import Decimal
 from .models import Listing, Booking, SampleDataGenerator
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_str
+from django.template.loader import render_to_string
+from django.core.mail import send_mail
+from django.conf import settings
 
 
-# Helper function for password validation (same as before)
+# Forgot Password View
+def forgot_password(request):
+    if request.method == 'POST':
+        email = request.POST.get('email', '').strip()
+
+        # Check if email exists (use username since username=email and unique)
+        try:
+            user = User.objects.get(username=email)
+
+            # Generate password reset token
+            token = default_token_generator.make_token(user)
+            uid = urlsafe_base64_encode(force_bytes(user.pk))
+
+            # Create reset link
+            reset_link = request.build_absolute_uri(
+                f'/reset-password/{uid}/{token}/'
+            )
+
+            # Prepare email
+            subject = 'Reset Your Staynest Password'
+            message = f"""
+Hello {user.first_name or user.username},
+
+You requested to reset your password for your Staynest account.
+
+Click the link below to reset your password:
+{reset_link}
+
+This link will expire in 24 hours.
+
+If you didn't request this, please ignore this email.
+
+Best regards,
+Staynest Team
+            """
+
+            # Send email
+            try:
+                send_mail(
+                    subject,
+                    message,
+                    settings.DEFAULT_FROM_EMAIL,
+                    [email],
+                    fail_silently=False,
+                )
+                messages.success(
+                    request,
+                    f"Password reset link has been sent to {email}. Please check your inbox."
+                )
+            except Exception as e:
+                messages.error(
+                    request,
+                    "Failed to send email. Please try again later."
+                )
+                print(f"Email error: {e}")  # Terminal এ error দেখাবে
+
+            return redirect('forgot_password')
+
+        except User.DoesNotExist:
+            messages.error(request, "No account found with this email address!")
+
+    return render(request, 'forgot_password.html')
+
+
+# Reset Password Confirm View
+def reset_password_confirm(request, uidb64, token):
+    try:
+        # Decode user id
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+
+        # Verify token
+        if default_token_generator.check_token(user, token):
+            if request.method == 'POST':
+                new_password = request.POST.get('new_password')
+                confirm_password = request.POST.get('confirm_password')
+
+                # Check if passwords match
+                if new_password != confirm_password:
+                    messages.error(request, "Passwords do not match!")
+                    return render(request, 'reset_password_confirm.html')
+
+                # Validate password
+                is_valid, message = is_valid_password(new_password)
+                if not is_valid:
+                    messages.error(request, f"Password requirements: {message}")
+                    return render(request, 'reset_password_confirm.html')
+
+                # Set new password
+                user.set_password(new_password)
+                user.save()
+
+                messages.success(request, "Password reset successful! You can now login with your new password.")
+                return redirect('login')
+
+            return render(request, 'reset_password_confirm.html')
+        else:
+            messages.error(request, "Invalid or expired reset link!")
+            return redirect('forgot_password')
+
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+        messages.error(request, "Invalid reset link!")
+        return redirect('forgot_password')
+# Helper function for password validation
 def is_valid_password(password):
     errors = []
 

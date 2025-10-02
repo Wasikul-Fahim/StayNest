@@ -10,4 +10,6 @@ urlpatterns = [
     path('my-bookings/', views.my_bookings, name='my_bookings'),
     path('create-listing/', views.create_listing, name='create_listing'),
     path('logout/', views.logout_view, name='logout'),
+    path('forgot-password/', views.forgot_password, name='forgot_password'),
+    path('reset-password/<uidb64>/<token>/', views.reset_password_confirm, name='reset_password_confirm'),
 ]
